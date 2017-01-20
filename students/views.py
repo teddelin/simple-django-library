@@ -30,6 +30,8 @@ class AddStudent(View):
 
             new_student.save()
 
-        form = self.FORM_CLASS()
+            form = self.FORM_CLASS()
+
+            return render(request, "add_student.html", {"form": form, "message": "Student tillagd"})
 
         return render(request, "add_student.html", {"form": form})
