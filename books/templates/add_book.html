@@ -5,6 +5,9 @@
     <title>Title</title>
 </head>
 <body>
+    {% if message %}
+        {{ message }}
+    {% endif %}
     <form action="" method="post">
         {% csrf_token %}
         {{ form.as_p }}

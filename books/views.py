@@ -32,6 +32,8 @@ class AddBook(View):
         if form.is_valid():
             new_book = self.MODEL(**form.cleaned_data)
             new_book.save()
+            form = self.FORM_CLASS()
 
-        form = self.FORM_CLASS()
+            return render(request, 'add_book.html', {'form': form, 'message': 'Bok tillagd'})
+
         return render(request, 'add_book.html', {'form': form})
