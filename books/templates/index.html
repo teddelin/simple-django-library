@@ -6,5 +6,11 @@
 </head>
 <body>
     <p>Ursäkta röran vi byggger om</p>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form.title }}
+        <input type="submit" value="Lägg till bok">
+    </form>
 </body>
 </html>

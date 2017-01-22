@@ -1,18 +1,22 @@
+import json
+from dal import autocomplete
 from django.shortcuts import render
-from django.views.generic import View
+from django.views.generic import View, FormView
 from django.http import HttpResponse
-from books.forms import BookForm
+from books.forms import BookForm, GetBookForm
 from books.models import Books
 
-# Create your views here.
-def index(request):
-    return HttpResponse("Ursäkta röran vi byggger om")
 
-
-class ViewBooks(View):
+class ViewBooks(FormView):
+    FORM_CLASS = GetBookForm
+    MODEL = Books
 
     def get(self, request):
-        return render(request, 'index.html')
+
+        form = self.FORM_CLASS()
+
+        return render(request, 'index.html', {'form': form})
+
 
 class AddBook(View):
 

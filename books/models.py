@@ -6,7 +6,7 @@ from django.db import models
 
 
 class Books(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, unique=True)
     author = models.CharField(max_length=200, blank=True)
     category = models.CharField(max_length=200)
     iban = models.CharField(max_length=20, blank=True)
