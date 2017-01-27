@@ -17,7 +17,7 @@ class ViewBooks(FormView):
         return render(request, 'index.html', {'form': form})
 
     def post(self, request, *args, **kwargs):
-        print(request.POST)
+
         form = self.FORM_CLASS()
 
         book = Books.objects.get(pk=request.POST["title"])
@@ -50,3 +50,11 @@ class AddBook(View):
 
         return render(request, 'add_book.html', {'form': form})
 
+
+class BookView(View):
+
+    def get(self, request, pk, *args, **kwargs):
+
+        book = Books.objects.get(pk=pk)
+
+        return render(request, "book.html", {"book": book})

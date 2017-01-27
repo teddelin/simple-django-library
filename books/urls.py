@@ -9,5 +9,5 @@ urlpatterns = [
     url(r'^ajax_select/', include(ajax_select_urls)),
     url(r'^find_book/$', views.ViewBooks.as_view(), name='find_book'),
     url(r'^add_book/$', views.AddBook.as_view(), name='add_book'),
-   # url(r'^find_book/(?P<pk>[0-9]+)$', views.ViewBooks.as_view(), name='view_book'),
+    url(r'^book/(?P<pk>[0-9]+)/$', views.BookView.as_view(), name='view_book'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
