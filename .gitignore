@@ -1,2 +1,5 @@
+# Created by .ignore support plugin (hsz.mobi)
+
+/students/migrations/
 /books/migrations/
 /db.sqlite3
