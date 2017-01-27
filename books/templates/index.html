@@ -10,7 +10,10 @@
         {% csrf_token %}
         {{ form.media }}
         {{ form.title }}
-        <input type="submit" value="Lägg till bok">
+        <input type="submit" value="Öppna">
     </form>
+    <h2>Title: {{ book.title }}</h2>
+    <h3>Författare: {{ book.author }}</h3>
+    <h4>Antal: {{ book.amount }}</h4>
 </body>
 </html>
