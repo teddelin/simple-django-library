@@ -9,7 +9,8 @@ class Books(models.Model):
     title = models.CharField(max_length=200, unique=True)
     author = models.CharField(max_length=200, blank=True)
     category = models.CharField(max_length=200)
-    iban = models.CharField(max_length=20, blank=True)
+    isbn = models.CharField(max_length=20, blank=True)
+    amount = models.IntegerField(default=1)
 
     def __str__(self):
         return self.title

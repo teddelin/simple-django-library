@@ -1,5 +1,4 @@
 import json
-from dal import autocomplete
 from django.shortcuts import render
 from django.views.generic import View, FormView
 from django.http import HttpResponse

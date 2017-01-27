@@ -1,1 +1,2 @@
 django-ajax-selects
+django
