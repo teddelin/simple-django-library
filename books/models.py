@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
-
+from django.utils import timezone
 from django.db import models
-
+from students.models import Students
 # Create your models here.
 
 
@@ -14,3 +14,13 @@ class Books(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Borrowship(models.Model):
+
+    book = models.ForeignKey(Books)
+    student = models.ForeignKey(Students)
+
+    date = models.DateField(default=timezone.now)
+    returned = models.BooleanField(default=False)
+

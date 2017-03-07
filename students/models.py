@@ -1,5 +1,7 @@
 from django.db import models
-#Motverka fusk
+
+
+# Motverka fusk
 class Students(models.Model):
     firstname = models.CharField(max_length=25)
     lastname = models.CharField(max_length=50)

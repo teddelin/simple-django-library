@@ -5,8 +5,30 @@
     <title>Title</title>
 </head>
 <body>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     <h2>Title: {{ book.title }}</h2>
     <h3>Författare: {{ book.author }}</h3>
+    {% if borrowers  %}
+    <h4>Lånad av:
+        {{ borrowers }}
+    </h4>
+    {% endif %}
     <h4>Antal: {{ book.amount }}</h4>
+    <form action="/books/book/{{ book.pk }}/" method="post">
+        {% csrf_token %}
+        <select name="student">
+            <option value selected disabled>Välj en student</option>
+            {% for student in students %}
+               <option value="{{student.pk}}">{{ student.lastname }}, {{ student.firstname }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Låna">
+    </form>
 </body>
 </html>

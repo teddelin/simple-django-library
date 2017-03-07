@@ -1,5 +1,22 @@
 from ajax_select import register, LookupChannel
 from .models import Books
+from students.models import Students
+
+
+@register('firstname')
+class FirstnameLookup(LookupChannel):
+
+    model = Students
+
+    def check_auth(self, request):
+        return True
+
+    def get_query(self, q, request):
+        return self.model.objects.filter(firstname__contains=q).order_by('firstname')
+
+    def format_item_display(self, item):
+        return u"<span class='firstname'>%s</span>" % item.firstname
+
 
 @register('title')
 class TitleLookup(LookupChannel):

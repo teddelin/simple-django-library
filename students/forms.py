@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from students.models import Students
-
+from ajax_select.fields import AutoCompleteSelectField, AutoCompleteSelectMultipleField
 
 class StudentForm(ModelForm):
     class Meta:
