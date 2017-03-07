@@ -68,7 +68,6 @@ class BookView(View):
             for loan in loans:
                 student = Students.objects.get(pk=loan.student.pk)
                 borrowers.append(student.firstname+' '+student.lastname)
-                print(borrowers)
         except Borrowship.DoesNotExist:
             borrowers = []
 
