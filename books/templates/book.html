@@ -7,7 +7,7 @@
         {% endfor %}
     </ul>
     {% endif %}
-    <h2>Title: {{ book.title }}</h2>
+    <h2>Titel: {{ book.title }}</h2>
     <h3>Författare: {{ book.author }}</h3>
     {% if borrowers  %}
     <h4>Lånad av:
@@ -15,7 +15,7 @@
     </h4>
     {% endif %}
     <h4>Antal: {{ book.amount }}</h4>
-    <form action="/books/book/{{ book.pk }}/" method="post">
+    <form action="/book/{{ book.pk }}/" method="post">
         {% csrf_token %}
         <select name="student">
             <option value selected disabled>Välj en student</option>
