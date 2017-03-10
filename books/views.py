@@ -63,7 +63,7 @@ class BookView(View):
 
         book = Books.objects.get(pk=pk)
         try:
-            loans = Borrowship.objects.filter(book=Books(pk))
+            loans = Borrowship.objects.filter(book=Books(pk), returned=False)
             borrowers = []
             for loan in loans:
                 student = Students.objects.get(pk=loan.student.pk)
@@ -91,7 +91,7 @@ class BookView(View):
         else:
             messages.error(request, 'Alla böcker utlånade')
         try:
-            loans = Borrowship.objects.filter(book=Books(pk))
+            loans = Borrowship.objects.filter(book=Books(pk), returned=False)
             borrowers = []
             for loan in loans:
                 student = Students.objects.get(pk=loan.student.pk)
