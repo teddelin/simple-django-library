@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <select name="student">
+        <option value selected disabled>Välj en student</option>
+        {% for student in students %}
+           <option value="{{student.pk}}">{{ student.lastname }}, {{ student.firstname }}</option>
+        {% endfor %}
+    </select>
+
+
+    <a href="/students/student/" class="student-pick">Välj</a>
+
+    <h2>Namn: {{ student.firstname }} {{ student.lastname }}</h2>
+    <h3>E-post: {{ student.email }}</h3>
+
+    {% if books %}
+        {% for book in books %}
+            <form action="" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="book" value="{{book.pk}}">
+                {{book.title}}<input type="submit" value="Lämna tillbaka">
+            </form>
+        {% endfor %}
+    {% endif %}
+    <script>
+        var $btn = $('.student-pick'),
+        $btnHref = "/students/student/",
+        $btnTxt = $('.text'),
+        $select = $('select');
+
+        $btnTxt.text($select.val());
+        $btn.attr('href', $btnHref + $select.val());
+
+        $select.change(function () {
+            $btnTxt.text($select.val());
+            $btn.attr('href', $btnHref + $select.val());
+        });
+    </script>
+{% endblock content %}
