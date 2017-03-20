@@ -2,6 +2,7 @@ import json
 from django.shortcuts import render
 from django.contrib import messages
 from django.views.generic import View, FormView
+from django.core.mail import send_mail
 from django.http import HttpResponse
 from books.forms import BookForm, GetBookForm, GetStudentForm
 from ajax_select.fields import autoselect_fields_check_can_add
@@ -76,6 +77,7 @@ class BookView(View):
                                              "borrowers": ", ".join(borrowers)})
 
     def post(self, request, pk):
+
         students = Students.objects.all().order_by("lastname")
         borrowers = []
         book = Books.objects.get(pk=pk)
@@ -83,9 +85,23 @@ class BookView(View):
 
         # Check if there are enough books to borrow
         if book.amount > 0:
-            new_loan = Borrowship(student=Students(pk=student),
-                                  book=Books(pk=pk))
+            student = Students.objects.get(pk=student)
+            book = Books.objects.get(pk=pk)
+            new_loan = Borrowship(student=student,
+                                  book=book)
             new_loan.save()
+            send_mail(
+                'Skolbiblioteket',
+                """Hej {name}
+
+Du har nu lånat  "{book}" under 4 veckors tid. Hoppas du hunnit läsa ut boken för nu är det dags att lämna tillbaka den.
+
+Om den inte lämnas tillbaka till utlånande lärare för avregistrering inom en vecka kommer vi att debitera dig 75% av bokens inköpspris.
+
+Skolbiblioteket""".format(name=student.firstname, book=book.title),
+                'Skolbiblioteket@no-reply.com',
+                [student.email, ]
+            )
             book.amount -= 1
             book.save()
         else:
