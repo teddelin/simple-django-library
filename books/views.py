@@ -1,4 +1,8 @@
+# -*- coding: latin-1 -*-
+
 import json
+
+from django.core.mail import send_mail
 from django.shortcuts import render
 from django.contrib import messages
 from django.views.generic import View, FormView
@@ -88,8 +92,24 @@ class BookView(View):
             new_loan.save()
             book.amount -= 1
             book.save()
+            student = Students.objects.get(pk=student)
+            book = Books.objects.get(pk=pk)
+            send_mail(
+                'Skolbiblioteket',
+                """Hej {0}:
+Du har just nu lånat {1}.
+Den skall lämnas tillbaka inom 4 veckor.
+Hoppas du tycker boken är bra.
+
+Glada hälsningar
+
+Skolbiblioteket""".format(student.firstname, book.title),
+                'lilbiblan@skf.com',
+                [student.email.replace("\n", ""), ],
+                fail_silently=False,
+            )
         else:
-            messages.error(request, 'Alla bÃ¶cker utlÃ¥nade')
+            messages.error(request, 'Alla böcker utlånade')
         try:
             loans = Borrowship.objects.filter(book=Books(pk), returned=False)
             borrowers = []

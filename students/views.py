@@ -1,4 +1,8 @@
+# -*- coding: latin-1 -*-
+
+
 from django.shortcuts import render
+from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.views.generic import View
 from students.forms import StudentForm
@@ -73,6 +77,19 @@ class StudentView(View):
             book.amount += 1
             book.save()
             loan.save()
+            send_mail(
+                'Skolbiblioteket',
+                """Hej {0}:
+Hoppas {1} va bra, tack för att du lämnade tillbaka den så andra elever kan läsa den.
+
+Glada hälsningar
+
+Skolbiblioteket""".format(student.firstname, book.title),
+                'lilbiblan@skf.com',
+                [student.email.replace("\n", ""), ],
+                fail_silently=False,
+            )
+
 
         except Borrowship.DoesNotExist:
             pass
