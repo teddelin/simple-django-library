@@ -125,3 +125,5 @@ STATIC_URL = '/static/'
 
 EMAIL_HOST = 'localhost'
 EMAIL_HOST_USER = "lilbiblan@skf.com"
+
+LOGIN_URL = '/login/'
