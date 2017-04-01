@@ -2,19 +2,23 @@
 
 import json
 
+from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import authenticate, login, logout
 from django.core.mail import send_mail
-from django.shortcuts import render
+from django.shortcuts import render, redirect, Http404
 from django.contrib import messages
 from django.views.generic import View, FormView
 from django.core.mail import send_mail
 from django.http import HttpResponse
-from books.forms import BookForm, GetBookForm, GetStudentForm
+from books.forms import BookForm, GetBookForm, GetStudentForm, LoginForm, UserForm
 from ajax_select.fields import autoselect_fields_check_can_add
 from books.models import Books, Borrowship
 from students.models import Students
 
 
-class ViewBooks(FormView):
+class ViewBooks(LoginRequiredMixin, FormView):
     FORM_CLASS = GetBookForm
 
     def get(self, request):
@@ -33,7 +37,7 @@ class ViewBooks(FormView):
                                               "form": form})
 
 
-class AddBook(View):
+class AddBook(LoginRequiredMixin, View):
 
     FORM_CLASS = BookForm
     MODEL = Books
@@ -58,7 +62,7 @@ class AddBook(View):
         return render(request, 'add_book.html', {'form': form})
 
 
-class BookView(View):
+class BookView(LoginRequiredMixin, View):
 
     FORM_CLASS = GetStudentForm
 
@@ -138,3 +142,60 @@ Skolbiblioteket""".format(student.firstname, book.title),
         return render(request, "book.html", {"book": book,
                                              "students": students,
                                              "borrowers": ", ".join(borrowers)})
+
+
+class UserCreation(LoginRequiredMixin, View):
+    def post(self, request):
+        form = UserForm(request.POST)
+        if form.is_valid():
+            new_user = User.objects.create_user(**form.cleaned_data)
+
+            return HttpResponseRedirect('index.html')
+        form = UserForm()
+
+        return render(request, 'user_creation.html', {'form': form})
+
+    def get(self, request):
+        form = UserForm()
+        return render(request, 'user_creation.html', {'form': form})
+
+def login_to_app(request):
+    """
+    Login is required to access the main pages.
+
+    The login screen passes data through to here where we can validate and then redirect.
+
+    Currently we redirect to the 'Create Session' page.
+
+    :param request: HTTP request object
+    :return: redirect to the load_file window.
+    """
+
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+
+        if form.is_valid():
+            user = form.login()
+
+            if user:
+                login(request, user)
+
+                if request.POST.get('next'):
+                    return redirect(request.POST.get('next', 'find_book'))
+                else:
+                    return redirect('find_book', )
+    else:
+        form = LoginForm()
+    # If we have reached here, the user has not registered as logged in.
+    return render(request, 'login.html', {'form': form})
+
+
+def logout_of_app(request):
+    """
+    Basic view to logout a user. Redirects to the login screen.
+
+    :param request: HTTP Request containing the user.
+    :return: redirect to login page.
+    """
+    logout(request)
+    return redirect('login')
