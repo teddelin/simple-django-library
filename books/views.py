@@ -96,24 +96,12 @@ class BookView(LoginRequiredMixin, View):
             student = Students.objects.get(pk=student)
             book = Books.objects.get(pk=pk)
             new_loan = Borrowship(student=student,
-                                  book=book)
+                                  book=book,
+                                  user=request.user)
             new_loan.save()
-            send_mail(
-                'Skolbiblioteket',
-                """Hej {name}
-
-Du har nu lånat  "{book}" under 4 veckors tid. Hoppas du hunnit läsa ut boken för nu är det dags att lämna tillbaka den.
-
-Om den inte lämnas tillbaka till utlånande lärare för avregistrering inom en vecka kommer vi att debitera dig 75% av bokens inköpspris.
-
-Skolbiblioteket""".format(name=student.firstname, book=book.title),
-                'Skolbiblioteket@no-reply.com',
-                [student.email, ]
-            )
             book.amount -= 1
             book.save()
-            student = Students.objects.get(pk=student)
-            book = Books.objects.get(pk=pk)
+            teacher = new_loan.user
             send_mail(
                 'Skolbiblioteket',
                 """Hej {0}:
@@ -125,7 +113,7 @@ Glada h�lsningar
 
 Skolbiblioteket""".format(student.firstname, book.title),
                 'lilbiblan@skf.com',
-                [student.email.replace("\n", ""), ],
+                [student.email.replace("\n", ""), teacher.email],
                 fail_silently=False,
             )
         else:

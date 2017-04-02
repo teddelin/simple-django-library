@@ -16,6 +16,7 @@ def send_reminder():
 
         student = Students.objects.get(pk=loan.student.pk)
         book = Books.objects.get(pk=loan.book.pk)
+        teacher = loan.user
         send_mail(
             'Skolbiblioteket',
             """Hej {0}:
@@ -26,7 +27,7 @@ Om den inte lämnas tillbaka till utlånande lärare för avregistrering inom en vec
 
 Skolbiblioteket """.format(student.firstname, book.title),
             'lilbiblan@skf.com',
-            [student.email.replace("\n", ""), ],
+            [student.email.replace("\n", ""), teacher.email],
             fail_silently=False,
         )
     high_date = datetime.today() - timedelta(days=22)
@@ -35,6 +36,7 @@ Skolbiblioteket """.format(student.firstname, book.title),
     for loan in three_week_notifications:
         student = Students.objects.get(pk=loan.student.pk)
         book = Books.objects.get(pk=loan.book.pk)
+        teacher = loan.user
         send_mail(
             'Skolbiblioteket',
             """Hej {0}:
@@ -46,7 +48,7 @@ Glada hälsningar
 
 Skolbiblioteket """.format(student.firstname, book.title),
             'lilbiblan@skf.com',
-            [student.email.replace("\n", ""), ],
+            [student.email.replace("\n", ""), teacher.email],
             fail_silently=False,
         )
 

@@ -73,6 +73,7 @@ class StudentView(LoginRequiredMixin, View):
             book.amount += 1
             book.save()
             loan.save()
+            teacher = loan.user
             send_mail(
                 'Skolbiblioteket',
                 """Hej {0}:
@@ -82,7 +83,7 @@ Glada hälsningar
 
 Skolbiblioteket""".format(student.firstname, book.title),
                 'lilbiblan@skf.com',
-                [student.email.replace("\n", ""), ],
+                [student.email.replace("\n", ""), teacher.email],
                 fail_silently=False,
             )
 

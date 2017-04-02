@@ -1,8 +1,9 @@
 from __future__ import unicode_literals
-from django.utils import timezone
+from django.contrib.auth.models import User
 from django.db import models
+from django.utils import timezone
+
 from students.models import Students
-# Create your models here.
 
 
 class Books(models.Model):
@@ -20,6 +21,7 @@ class Borrowship(models.Model):
 
     book = models.ForeignKey(Books)
     student = models.ForeignKey(Students)
+    user = models.ForeignKey(User)
 
     date = models.DateField(default=timezone.now)
     returned = models.BooleanField(default=False)
