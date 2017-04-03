@@ -1,14 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
-    <p>Ursäkta röran vi byggger om</p>
+    <h4>Välj en bok:</h4>
     <form action="" method="post">
         {% csrf_token %}
         {{ form.media }}
         {{ form.title }}
-        <input type="submit" value="Välj">
+        <input type="submit" value="Välj" class="button">
     </form>
+    {% if book %}
     <h2>Titel: {{ book.title }}</h2>
     <h3>Författare: {{ book.author }}</h3>
     <h4>Antal: {{ book.amount }}</h4>
-    <a href="/book/{{ book.pk }}">Detaljer</a>
+    <a href="/book/{{ book.pk }}" class="button">Gå vidare</a>
+    {% endif %}
 {% endblock content %}
