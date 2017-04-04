@@ -138,7 +138,7 @@ class UserCreation(LoginRequiredMixin, View):
         if form.is_valid():
             new_user = User.objects.create_user(**form.cleaned_data)
 
-            return HttpResponseRedirect('index.html')
+            return HttpResponseRedirect('/create_user')
         form = UserForm()
 
         return render(request, 'user_creation.html', {'form': form})
