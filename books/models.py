@@ -8,9 +8,9 @@ from students.models import Students
 
 class Books(models.Model):
     title = models.CharField(max_length=200, unique=True)
-    author = models.CharField(max_length=200, blank=True)
+    author = models.CharField(max_length=200, blank=True, null=True)
     category = models.CharField(max_length=200)
-    isbn = models.CharField(max_length=20, blank=True)
+    isbn = models.CharField(max_length=20, blank=True, null=True)
     amount = models.IntegerField(default=1)
 
     def __str__(self):
