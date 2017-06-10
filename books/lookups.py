@@ -1,6 +1,7 @@
 from ajax_select import register, LookupChannel
-from .models import Books
+
 from students.models import Students
+from books.models import Books
 
 
 @register('firstname')

@@ -1,19 +1,22 @@
 # -*- coding: latin-1 -*-
 
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
 from django.core.mail import send_mail
 from django.http import HttpResponse
+from django.shortcuts import render
 from django.views.generic import View
-from students.forms import StudentForm
-from students.models import Students
+
 from books.forms import GetStudentForm
 from books.models import Books, Borrowship
-from django.contrib import messages
+from students.forms import StudentForm
+from students.models import Students
+
 
 class ViewStudents(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, "index.html")
+
 
 class AddStudent(LoginRequiredMixin, View):
     FORM_CLASS = StudentForm
@@ -38,6 +41,7 @@ class AddStudent(LoginRequiredMixin, View):
             return render(request, "add_student.html", {"form": form, "message": "Student tillagd"})
 
         return render(request, "add_student.html", {"form": form})
+
 
 class StudentView(LoginRequiredMixin, View):
 

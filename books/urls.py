@@ -1,5 +1,5 @@
-from django.conf.urls import url, include
 from ajax_select import urls as ajax_select_urls
+from django.conf.urls import url, include
 from django.conf import settings
 from django.conf.urls.static import static
 
