@@ -37,6 +37,7 @@ class GetStudentForm(forms.Form):
 
         firstname = AutoCompleteSelectField('firstname', required=False, help_text=None)
 
+
 class LoginForm(Form):
     """
     Manage logins to the app.
