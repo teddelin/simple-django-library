@@ -7,7 +7,6 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import View
 
-from books.forms import GetStudentForm
 from books.models import Books, Borrowship
 from students.forms import StudentForm
 from students.models import Students
@@ -45,11 +44,8 @@ class AddStudent(LoginRequiredMixin, View):
 
 class StudentView(LoginRequiredMixin, View):
 
-    FORM_CLASS = GetStudentForm
-
     def get(self, request, pk, *args, **kwargs):
         students = Students.objects.all().order_by("lastname")
-        form = self.FORM_CLASS()
 
         student = Students.objects.get(pk=pk)
         try:
