@@ -1,6 +1,7 @@
+from django.contrib.auth.models import User
 from django.test import TestCase
 
-from books.forms import BookForm, GetBookForm
+from books.forms import BookForm, GetBookForm, LoginForm
 from books.models import Books
 
 
@@ -39,5 +40,20 @@ class GetBookFormTest(TestCase):
     def test_valid_data(self):
         form = GetBookForm({
             'title': 1
+        })
+        self.assertTrue(form.is_valid())
+
+
+class LoginFormTest(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create_user(username='test',
+                                             email='test.testsson@email.com',
+                                             password='test123')
+
+    def test_valid_data(self):
+        form = LoginForm({
+            'username': 'test',
+            'password': 'test123'
         })
         self.assertTrue(form.is_valid())

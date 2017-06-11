@@ -1,0 +1,18 @@
+[run]
+
+omit =
+    */apps.py
+    */test/*
+    */urls.py
+
+[report]
+
+omit =
+    simpleDjangoLibrary/settings/*
+    simpleDjangoLibrary/wsgi.py
+    requirements.py
+    manage.py
+    */apps.py
+    */test/*
+    */migrations/*
+    */urls.py
