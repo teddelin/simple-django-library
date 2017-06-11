@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.test import Client, TestCase, RequestFactory
 
+from books.test.factories import BorrowshipFactory
 from students.views import ViewStudents, AddStudent, StudentView
 from students.models import Students
 
@@ -54,10 +55,15 @@ class StudentViewTest(TestCase):
 
     def setUp(self):
         self.factory = RequestFactory()
+        self.borrowship = BorrowshipFactory.create()
         self.student = Students.objects.create(firstname='test', lastname='testsson', email='test.testsson@email.com')
 
     def test_view_get_call(self):
         request = self.factory.get('/students/student/1')
         response = StudentView().get(request, 1)
-        print(response)
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_get_with_borrowship_call(self):
+        request = self.factory.get('/students/student/{}'.format(self.borrowship.student.pk))
+        response = StudentView().get(request, self.borrowship.student.pk)
         self.assertEqual(response.status_code, 200)
