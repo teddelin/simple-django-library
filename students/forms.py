@@ -1,5 +1,3 @@
-from ajax_select.fields import AutoCompleteSelectField, AutoCompleteSelectMultipleField
-from django import forms
 from django.forms import ModelForm
 
 from students.models import Students
