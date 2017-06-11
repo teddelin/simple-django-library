@@ -6,9 +6,9 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.views.generic import View, FormView
+from django.views.generic import View
 
-from books.forms import BookForm, GetBookForm, GetStudentForm, LoginForm, UserForm
+from books.forms import BookForm, GetBookForm, LoginForm, UserForm
 from books.models import Books, Borrowship
 from students.models import Students
 
@@ -59,11 +59,8 @@ class AddBook(LoginRequiredMixin, View):
 
 class BookView(LoginRequiredMixin, View):
 
-    FORM_CLASS = GetStudentForm
-
     def get(self, request, pk, *args, **kwargs):
         students = Students.objects.all().order_by("lastname")
-        form = self.FORM_CLASS()
 
         book = Books.objects.get(pk=pk)
         try:

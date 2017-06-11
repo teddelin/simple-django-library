@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from books.forms import BookForm
+from books.forms import BookForm, GetBookForm
 from books.models import Books
 
 
@@ -27,3 +27,17 @@ class BookFormTest(TestCase):
         self.assertEqual(book.author, 'test testsson')
         self.assertEqual(book.category, 'Unit testing')
         self.assertEqual(book.amount, 1)
+
+
+class GetBookFormTest(TestCase):
+
+    def setUp(self):
+        self.entry = Books.objects.create(title='testing',
+                                          author='test testsson',
+                                          category='Unit testing')
+
+    def test_valid_data(self):
+        form = GetBookForm({
+            'title': 1
+        })
+        self.assertTrue(form.is_valid())

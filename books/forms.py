@@ -31,13 +31,6 @@ class GetBookForm(forms.Form):
     title = AutoCompleteSelectField('title', required=False, help_text=None)
 
 
-class GetStudentForm(forms.Form):
-    class Meta:
-        model = Students
-
-        firstname = AutoCompleteSelectField('firstname', required=False, help_text=None)
-
-
 class LoginForm(Form):
     """
     Manage logins to the app.
