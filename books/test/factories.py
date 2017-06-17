@@ -5,6 +5,13 @@ from books import models
 from students.test import factories
 
 
+class UserFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = User
+
+    username = factory.Sequence(lambda n: "user_%d" % n)
+
+
 class BookFactory(factory.DjangoModelFactory):
     """ Factory for the Books model. """
     class Meta:
@@ -24,6 +31,4 @@ class BorrowshipFactory(factory.DjangoModelFactory):
 
     book = factory.SubFactory(BookFactory)
     student = factory.SubFactory(factories.StudentFactory)
-    user = User.objects.create_user(username='tester',
-                                    email='test.testsson@email.com',
-                                    password='test123')
+    user = factory.SubFactory(UserFactory)

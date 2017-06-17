@@ -1,5 +1,4 @@
-from django.contrib.auth.models import User
-from django.test import Client, TestCase, RequestFactory
+from django.test import TestCase, RequestFactory
 
 from books.test.factories import BorrowshipFactory
 from students.views import ViewStudents, AddStudent, StudentView

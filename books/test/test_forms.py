@@ -51,6 +51,9 @@ class LoginFormTest(TestCase):
                                              email='test.testsson@email.com',
                                              password='test123')
 
+    def tearDown(self):
+        self.user.delete()
+
     def test_valid_data(self):
         form = LoginForm({
             'username': 'test',

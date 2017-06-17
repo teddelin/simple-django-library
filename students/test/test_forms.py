@@ -14,13 +14,13 @@ class StudentFormTest(TestCase):
 
     def test_valid_data(self):
         form = StudentForm({
-            'firstname': 'test',
-            'lastname': 'testsson',
-            'email': 'test.testsson@email.com'
+            'firstname': 'Joe',
+            'lastname': 'Smith',
+            'email': 'joe.smith@email.com'
         })
         self.assertTrue(form.is_valid())
 
         student = form.save()
-        self.assertEqual(student.firstname, 'test')
-        self.assertEqual(student.lastname, 'testsson')
-        self.assertEqual(student.email, 'test.testsson@email.com')
+        self.assertEqual(student.firstname, 'Joe')
+        self.assertEqual(student.lastname, 'Smith')
+        self.assertEqual(student.email, 'joe.smith@email.com')

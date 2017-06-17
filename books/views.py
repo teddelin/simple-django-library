@@ -22,7 +22,7 @@ class ViewBooks(LoginRequiredMixin, View):
 
         return render(request, 'index.html', {'form': form})
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
 
         form = self.FORM_CLASS()
 
